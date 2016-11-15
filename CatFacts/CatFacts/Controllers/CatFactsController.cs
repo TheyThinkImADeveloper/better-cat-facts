@@ -5,10 +5,11 @@ namespace CatFacts.Controllers
     using System.Linq;
     using System.Web.Http;
 
-    [Route("api/catfact")]
+    [RoutePrefix("api/catfact")]
     public class CatFactsController : ApiController
     {
-        public IHttpActionResult Post()
+        [Route("")]
+        public IHttpActionResult Post([FromBody] string catFactToSave)
         {
             //C:\github\better-cat-facts\catfactsdata
             var fact = "Cats are actually very tech saavy.";
@@ -24,11 +25,19 @@ namespace CatFacts.Controllers
             return Ok("hello");
         }
 
-        public IHttpActionResult Get()
+        [Route("{catFactNumber}")]
+        public IHttpActionResult Get(int catFactNumber)
         {
-            
+
 
             return Ok();
+        }
+
+        [Route("{catFactNumber}"), HttpDelete]
+        public IHttpActionResult Delete(int catFactNumber)
+        {
+
+            return null;
         }
     }
 }
