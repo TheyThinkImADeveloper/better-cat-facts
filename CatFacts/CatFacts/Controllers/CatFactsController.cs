@@ -2,6 +2,7 @@
 namespace CatFacts.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Web.Http;
@@ -12,15 +13,11 @@ namespace CatFacts.Controllers
         [Route("")]
         public IHttpActionResult Post([FromBody] string catFactToSave)
         {
-            //C:\github\better-cat-facts\catfactsdata
+            var catFacts = ReadCatFactsFile();
 
-            var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
-
-            var catFactsList = catFacts.ToList();
-
-            catFactsList.Add(catFactToSave);
+            catFacts.Add(catFactToSave);
             
-            File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFactsList);
+            File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFacts);
 
             return Ok();
         }
@@ -28,23 +25,27 @@ namespace CatFacts.Controllers
         [Route("{catFactNumber}")]
         public IHttpActionResult Get(int catFactNumber)
         {
-            return Ok();
+            var catFacts = this.ReadCatFactsFile();
+
+            return Ok(catFacts[catFactNumber]);
         }
 
         [Route("{indexOfDeletedCatFact}"), HttpDelete]
         public IHttpActionResult Delete(int indexOfDeletedCatFact)
         {
-            var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
+            var catFacts = ReadCatFactsFile();
 
-            //catFacts.ToList().RemoveAt(indexOfDeletedCatFact);
+            catFacts.RemoveAt(indexOfDeletedCatFact);
 
-            var catFactsList = catFacts.ToList();
-
-            catFactsList.RemoveAt(indexOfDeletedCatFact);
-
-            File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFactsList);
+            File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFacts);
             
             return Ok();
+        }
+
+        private List<string> ReadCatFactsFile()
+        {
+            var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
+            return catFacts.ToList();
         }
     }
 }
