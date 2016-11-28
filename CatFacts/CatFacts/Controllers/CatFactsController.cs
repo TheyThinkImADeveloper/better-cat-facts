@@ -12,17 +12,16 @@ namespace CatFacts.Controllers
         public IHttpActionResult Post([FromBody] string catFactToSave)
         {
             //C:\github\better-cat-facts\catfactsdata
-            var fact = "Cats are actually very tech saavy.";
 
             var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
 
             var catFactsList = catFacts.ToList();
 
-            catFactsList.Add(fact);
+            catFactsList.Add(catFactToSave);
             
             File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFactsList);
 
-            return Ok("hello");
+            return Ok();
         }
 
         [Route("{catFactNumber}")]
