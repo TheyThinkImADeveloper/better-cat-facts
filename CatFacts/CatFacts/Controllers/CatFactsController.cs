@@ -1,6 +1,7 @@
 ﻿
 namespace CatFacts.Controllers
 {
+    using System;
     using System.IO;
     using System.Linq;
     using System.Web.Http;
@@ -27,16 +28,23 @@ namespace CatFacts.Controllers
         [Route("{catFactNumber}")]
         public IHttpActionResult Get(int catFactNumber)
         {
-
-
             return Ok();
         }
 
-        [Route("{catFactNumber}"), HttpDelete]
-        public IHttpActionResult Delete(int catFactNumber)
+        [Route("{indexOfDeletedCatFact}"), HttpDelete]
+        public IHttpActionResult Delete(int indexOfDeletedCatFact)
         {
+            var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
 
-            return null;
+            //catFacts.ToList().RemoveAt(indexOfDeletedCatFact);
+
+            var catFactsList = catFacts.ToList();
+
+            catFactsList.RemoveAt(indexOfDeletedCatFact);
+
+            File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFactsList);
+            
+            return Ok();
         }
     }
 }
