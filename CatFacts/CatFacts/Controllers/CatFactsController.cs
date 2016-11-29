@@ -1,7 +1,6 @@
 ﻿
 namespace CatFacts.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -15,8 +14,13 @@ namespace CatFacts.Controllers
         {
             var catFacts = ReadCatFactsFile();
 
+            if (catFacts.Any(x => catFactToSave == x))
+            {
+                return BadRequest("EVERYONE KNOWS THAT ALREADY. NEWB.");
+            }
+
             catFacts.Add(catFactToSave);
-            
+
             File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFacts);
 
             return Ok();
@@ -30,6 +34,14 @@ namespace CatFacts.Controllers
             return Ok(catFacts[catFactNumber]);
         }
 
+        [Route(""), HttpGet]
+        public IHttpActionResult GetAllCatFacts()
+        {
+            var catFacts = this.ReadCatFactsFile();
+
+            return Ok(catFacts);
+        }
+
         [Route("{indexOfDeletedCatFact}"), HttpDelete]
         public IHttpActionResult Delete(int indexOfDeletedCatFact)
         {
@@ -38,7 +50,7 @@ namespace CatFacts.Controllers
             catFacts.RemoveAt(indexOfDeletedCatFact);
 
             File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFacts);
-            
+
             return Ok();
         }
 
@@ -47,5 +59,6 @@ namespace CatFacts.Controllers
             var catFacts = File.ReadAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt");
             return catFacts.ToList();
         }
+
     }
 }
