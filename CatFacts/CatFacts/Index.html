@@ -1,9 +1,16 @@
 ﻿<!doctype html>
-<html ng-app>
+<html ng-app="catApp">
 <head>
     <title>My Angular App</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="Angular_App/js/cat-facts.js"></script>
 </head>
-<body>
+<body ng-controller="CatAppCtrl">
+
+    <h1>{{title}}</h1>
+
+    <ol>
+        <li ng-repeat="catFact in catFacts">{{catFact}}</li>
+    </ol>
 </body>
 </html>
