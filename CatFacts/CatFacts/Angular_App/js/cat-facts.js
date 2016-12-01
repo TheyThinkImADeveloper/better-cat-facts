@@ -7,7 +7,7 @@ catApp.controller("CatAppCtrl", ["$scope", "$http", function ($scope, $http) {
     }
 
     $scope.title = "Hallo";
-    $scope.GetCatFacts = function() {
+    $scope.GetCatFacts = function () {
         $http({
             method: 'GET',
             url: '/api/catfact'
@@ -16,6 +16,18 @@ catApp.controller("CatAppCtrl", ["$scope", "$http", function ($scope, $http) {
             $scope.catFacts = response.data;
         });
     };
+    $scope.InitializeDelete = function ($index) {
+        $http({
+            method: 'GET',
+            url: '/api/catfact/' + $index
+        }).then(function (response) {
+            console.log(response);
+            $scope.catFacts = response.data;
+        });
+    }
+    $scope.ConfirmDelete = function () {
+
+    }
 
     constructor();
 
