@@ -16,5 +16,20 @@
             <button ng-click="InitializeDelete($index)">Delete</button>
         </li>
     </ol>
+    <div data-ng-show="showDeletePrompt">
+        <h3>Do you want to delete this cat fact? </h3>
+        <div>{{catFactToDelete.fact}}</div>
+        <button data-ng-click="CancelDelete()">ABORT</button>
+        <button data-ng-click="ConfirmDelete(catFactToDelete.index)">Duck. Yes.</button>
+    </div>
+    <div data-ng-show="showMessageWasDeleted">You deleted: {{catFactToDelete.fact}}</div>
+
+<fieldset>
+    <legend>Add a new cat fact:</legend>
+    <input type="text" data-ng-model="newCatFact"/>
+    <button data-ng-click="AddCatFact(newCatFact)" type="submit">Add</button>
+</fieldset>
+    {{newCatFact}}
+
 </body>
 </html>
