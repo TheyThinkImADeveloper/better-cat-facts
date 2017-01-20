@@ -49,7 +49,7 @@ catApp.controller("CatAppCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.AddCatFact = function(newFact) {
         $http({
-            data: newFact,
+            data: {"fact": newFact},
             method: 'POST',
             url: '/api/catfact/'
     }).then(function () {

@@ -10,16 +10,16 @@ namespace CatFacts.Controllers
     public class CatFactsController : ApiController
     {
         [Route("")]
-        public IHttpActionResult Post([FromBody] string catFactToSave)
+        public IHttpActionResult Post([FromBody] NewFact catFactToSave)
         {
             var catFacts = ReadCatFactsFile();
 
-            if (catFacts.Any(x => catFactToSave == x))
+            if (catFacts.Any(x => catFactToSave.Fact == x))
             {
                 return BadRequest("EVERYONE KNOWS THAT ALREADY. NEWB.");
             }
 
-            catFacts.Add(catFactToSave);
+            catFacts.Add(catFactToSave.Fact);
 
             File.WriteAllLines(@"C:\github\better-cat-facts\catfactsdata\catfacts.txt", catFacts);
 
@@ -60,5 +60,9 @@ namespace CatFacts.Controllers
             return catFacts.ToList();
         }
 
+        public class NewFact
+        {
+            public string Fact { get; set; }
+        }
     }
 }
