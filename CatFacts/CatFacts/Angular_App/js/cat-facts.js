@@ -6,6 +6,16 @@ catApp.controller("CatAppCtrl", ["$scope", "$http", function ($scope, $http) {
         $scope.GetCatFacts();
     }
 
+    var otherStuff;
+
+    function doStuff(aVariable) {
+        otherStuff = otherStuff + aVariable;
+    }
+
+    function doStuffPure(aVariable) {
+        return aVariable + aVariable;
+    }
+
     $scope.title = "Hallo";
     $scope.GetCatFacts = function () {
         $http({
